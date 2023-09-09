@@ -42,9 +42,9 @@ function App() {
   }, [ref]);
 
   return (
-    <div className="h-full w-full flex items-center justify-center gap-x-8">
+    <div className="h-full w-full flex flex-wrap overflow-auto items-center justify-center gap-x-8">
       
-      <div className="w-[380px] h-[581.15px] relative bg-hero-pattern bg-[length:468.32px_634.15px] bg-[top_left_-46px]">
+      <div className="hidden md:block w-[380px] h-[581.15px] relative bg-hero-pattern bg-[length:468.32px_634.15px] bg-[top_left_-46px]">
         <div className="w-[250px] h-[538px] absolute top-[27px] right-[18px]" ref={ref}>
           
           <img className="w-full h-full absolute top-0 left-0 opacity-0 transition-opacity duration-1000 ease-linear" src="https://www.instagram.com/static/images/homepage/screenshots/screenshot1-2x.png/cfd999368de3.png" alt="" />
@@ -54,8 +54,11 @@ function App() {
       
       
       </div>
+     
+      <div className="w-[350px] grid gap-y-3">
+
       
-      <div className="w-[350px] bg-white border p-[40px] pt-10 pb-2">
+      <div className=" bg-white border p-[40px] pt-10 pb-6">
             <a href="#" className=" flex justify-center mb-8 ">
             <img className="h-[51px]" src="https://www.instagram.com/static/images/web/logged_out_wordmark-2x.png/d2529dbef8ed.png" alt=""/>
             </a>
@@ -63,20 +66,27 @@ function App() {
            <Input type="text" value={username} onChange={e => setUsername(e.target.value)} label="Phone Number, Username or E-mail" />
            <Input type="password" value={password} onChange={e => setPassword(e.target.value)} label="Password" />
               
-             <button type="submit" disabled={!enable} className="h-[30px] bg-brand rounded-md font-semibold text-white text-sm disabled:opacity-70" >Log In</button>
-              <div className="flex items-center ">
+             <button type="submit" disabled={!enable} className="h-[30px] mt-1 bg-brand rounded-md font-semibold text-white text-sm disabled:opacity-70" >Log In</button>
+              
+              <div className="flex items-center my-2.5 mb-3.5 ">
                 <div className="h-px bg-gray-300 flex-1 "/>
                   <span className="px-4 text-[13px] text-gray-500 font-semibold ">OR</span>
                 <div className="h-px bg-gray-300 flex-1 "/>
                 
               </div>
-              <a href="#" className="flex justify-center items-center gap-x-2 text-sm font-semibold text-facebook ">
+                <a href="#" className="flex justify-center mb-2.5 items-center gap-x-2 text-sm font-semibold text-facebook ">
                   <AiFillFacebook size={18} />
                     Log in with Facebook
                 </a>
+                <a href="#" className="text-xs flex items-center justify-center text-link">
+                  Forgot Password?
+                </a>
            </form>    
          </div>
-          
+            <div className="bg-white border p-4 text-sm text-center ">
+              Don't Have an Account? <a href="#" className="text-brand font-semibold "> Sign Up! </a>
+            </div> 
+         </div>
     </div>
   );
 }
