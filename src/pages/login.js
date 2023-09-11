@@ -1,9 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import Input from "components/input";
 import { AiFillFacebook } from "react-icons/ai";
-
+import { useNavigate, useLocation} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "store/auth";
 
 export default function Login() {
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
   const ref = useRef();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -32,6 +38,16 @@ export default function Login() {
       loadImages();
     }
   }, [ref]);
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    dispatch(setUser({
+      username
+    }))
+    navigate(location.state?.return_url || '/', {
+      replace:true
+    })
+  }
 
   return (
     <div className="h-full w-full flex flex-wrap overflow-auto items-center justify-center gap-x-8">
@@ -74,7 +90,7 @@ export default function Login() {
               alt=""
             />
           </a>
-          <form className="grid gap-y-1.5">
+          <form onSubmit={handleSubmit} className="grid gap-y-1.5">
             <Input
               type="text"
               value={username}
