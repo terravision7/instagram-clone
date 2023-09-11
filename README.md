@@ -1,5 +1,11 @@
-# Getting Started with Create React App
+# The project is in progress.
+# It is not finished yet.
+# The project is in progress.
 
+#
+#
+
+# Getting Started with Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
