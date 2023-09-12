@@ -2,8 +2,12 @@
 # It is not finished yet.
 # The project is in progress.
 
-#
-#
+
+### Try App 
+#### https://instagram-clone-kappa-ten.vercel.app/
+### e-mail and password for log in
+#### email: instagramclone@gmail.com 
+#### password: 123456
 
 # Getting Started with Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
