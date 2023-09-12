@@ -4,10 +4,10 @@ import { AiFillFacebook } from "react-icons/ai";
 import { useNavigate, useLocation} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "store/auth";
+import { login } from "firebase.js";
 
 export default function Login() {
 
-  const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
   const ref = useRef();
@@ -39,14 +39,16 @@ export default function Login() {
     }
   }, [ref]);
 
-  const handleSubmit = e => {
+  
+
+  const handleSubmit = async e => {
     e.preventDefault()
-    dispatch(setUser({
-      username
-    }))
+    await login(username, password)
+ 
     navigate(location.state?.return_url || '/', {
       replace:true
     })
+    
   }
 
   return (
