@@ -2,19 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import Input from "components/input";
 import { AiFillFacebook } from "react-icons/ai";
 import { useNavigate, useLocation} from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setUser } from "store/auth";
 import { login } from "firebase.js";
+import { Formik, Form } from "formik";
+import { LoginSchema } from "validation/login-schema";
 
 export default function Login() {
 
   const navigate = useNavigate()
   const location = useLocation()
   const ref = useRef();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
-  const enable = username && password;
 
   useEffect(() => {
     const loadImages = () => {
@@ -39,15 +36,20 @@ export default function Login() {
     }
   }, [ref]);
 
+  const images = [
+    'https://www.instagram.com/static/images/homepage/screenshots/screenshot1-2x.png/cfd999368de3.png',
+    'https://www.instagram.com/static/images/homepage/screenshots/screenshot2-2x.png/80b8aebdea57.png',
+    'https://www.instagram.com/static/images/homepage/screenshots/screenshot3-2x.png/fe2540684ab2.png',
+    'https://www.instagram.com/static/images/homepage/screenshots/screenshot4-2x.png/8e9224a71939.png',
+  ]
   
 
-  const handleSubmit = async e => {
-    e.preventDefault()
-    await login(username, password)
- 
-    navigate(location.state?.return_url || '/', {
-      replace:true
-    })
+  const handleSubmit = async (values, actions) => {
+    await login(values.username, values.password)
+  
+     navigate(location.state?.return_url || '/', {
+       replace:true
+     })
     
   }
 
@@ -56,30 +58,17 @@ export default function Login() {
       
       <div className="hidden md:block w-[380px] h-[581.15px] relative bg-hero-pattern bg-[length:468.32px_634.15px] bg-[top_left_-46px]">
         <div
-          className="w-[250px] h-[538px] absolute top-[27px] right-[18px]"
-          ref={ref}
-        >
-          <img
-            className="w-full h-full absolute top-0 left-0 opacity-0 transition-opacity duration-1000 ease-linear"
-            src="https://www.instagram.com/static/images/homepage/screenshots/screenshot1-2x.png/cfd999368de3.png"
-            alt=""
-          />
-          <img
-            className="w-full h-full absolute top-0 left-0 opacity-0 transition-opacity duration-1000 ease-linear"
-            src="https://www.instagram.com/static/images/homepage/screenshots/screenshot2-2x.png/80b8aebdea57.png"
-            alt=""
-          />
-          <img
-            className="w-full h-full absolute top-0 left-0 opacity-0 transition-opacity duration-1000 ease-linear"
-            src="https://www.instagram.com/static/images/homepage/screenshots/screenshot3-2x.png/fe2540684ab2.png"
-            alt=""
-          />
-          <img
-            className="w-full h-full absolute top-0 left-0 opacity-0 transition-opacity duration-1000 ease-linear"
-            src="https://www.instagram.com/static/images/homepage/screenshots/screenshot4-2x.png/8e9224a71939.png"
-            alt=""
-          />
-          10{" "}
+          className="w-[250px] h-[538px] absolute top-[27px] right-[18px]" ref={ref} >
+            {images.map((image, key) => (
+              <img
+              key={key}
+              className="w-full h-full absolute top-0 left-0 opacity-0 transition-opacity duration-1000 ease-linear"
+              src={image}
+              alt=""
+            />
+            ))}
+          
+          
         </div>
       </div>
 
@@ -92,23 +81,30 @@ export default function Login() {
               alt=""
             />
           </a>
-          <form onSubmit={handleSubmit} className="grid gap-y-1.5">
-            <Input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+          <Formik
+            validationSchema={LoginSchema}
+            initialValues={{
+              username:'',
+              password:'',
+            }}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting, isValid, dirty, values}) => (
+              <Form className="grid gap-y-1.5">
+                
+                <Input
+              name='username'
               label="Phone Number, Username or E-mail"
             />
             <Input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name='password'
               label="Password"
             />
 
             <button
               type="submit"
-              disabled={!enable}
+              disabled={!isValid || !dirty || isSubmitting}
               className="h-[30px] mt-1 bg-brand rounded-md font-semibold text-white text-sm disabled:opacity-70"
             >
               Log In
@@ -134,7 +130,10 @@ export default function Login() {
             >
               Forgot Password?
             </a>
-          </form>
+              </Form>
+            )}
+          </Formik>
+
         </div>
         <div className="bg-white border p-4 text-sm text-center ">
           Don't Have an Account?{" "}
