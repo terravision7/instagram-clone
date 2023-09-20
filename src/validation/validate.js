@@ -2,7 +2,10 @@ import * as Yup from "yup";
 
 Yup.setLocale({
     mixed: {
-        required: "This field compulsory!"
+        required: "This field compulsory!",
+    },
+    string: {
+        
     }
 })
 
